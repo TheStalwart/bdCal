@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="lv">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pārvērtiet BD darba grafiku lejupielādējamos kalendāra failos.">
+  <meta name="referrer" content="no-referrer">
+  <meta name="application-name" content="bdCal">
+  <meta name="theme-color" content="#211c4b">
+  <link rel="canonical" href="https://thestalwart.github.io/bdCal/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="bdCal · BD">
+  <meta property="og:url" content="https://thestalwart.github.io/bdCal/">
+  <meta property="og:title" content="bdCal — BD darba grafiks kalendārā">
+  <meta property="og:description" content="Pārvērtiet BD darba grafiku lejupielādējamos kalendāra failos.">
+  <meta property="og:locale" content="lv_LV">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="bdCal — BD darba grafiks kalendārā">
+  <meta name="twitter:description" content="Pārvērtiet BD darba grafiku lejupielādējamos kalendāra failos.">
+  <title>bdCal — BD darba grafiks kalendārā</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+</head>
+
+<body>
+  <main class="page">
+    <header class="masthead">
+      <nav class="language-switch" aria-label="Valoda" data-i18n-aria-label="language">
+        <button type="button" data-language="lv" aria-pressed="true">Latviski</button>
+        <button type="button" data-language="en" aria-pressed="false">English</button>
+      </nav>
+      <p class="eyebrow" data-i18n="eyebrow">BD · Kalendāra pārveidotājs</p>
+      <h1 data-i18n="heading">Darba grafiks kalendārā</h1>
+      <p class="lede"><span data-i18n="ledeFirst">Pārvērtiet BD darba grafiku atsevišķos kalendāra failos.</span></p>
+    </header>
+
+    <section class="privacy-note" aria-label="Privātuma paziņojums" data-i18n-aria-label="privacyLabel">
+      <span class="privacy-icon" aria-hidden="true">●</span>
+      <p><strong data-i18n="privacyStrong">Visi dati paliek šajā ierīcē.</strong> <span data-i18n="privacyText">Nekas netiek augšupielādēts vai nosūtīts. Vārdi redzami tikai lokālajā priekšskatā un lejupielādēto failu nosaukumos; ja vārdi sakrīt, faila nosaukumā var tikt iekļauta personas koda pirmā daļa.</span></p>
+    </section>
+
+    <section class="panel" aria-labelledby="input-heading">
+      <div class="section-heading">
+        <div>
+          <p class="step" data-i18n="inputStep">01 · IEVADNE</p>
+          <h2 id="input-heading" data-i18n="inputHeading">Izvēlieties grafiku</h2>
+        </div>
+      </div>
+      <p class="acquire-instructions">
+        <strong data-i18n="acquisitionLead">Vispirms iegūstiet grafika failu:</strong>
+        <span data-i18n="acquisitionText">Ar labo peles pogu noklikšķiniet uz darba grafika un izvēlieties</span>
+        <span lang="lv">“Saglabāt kā...”</span>
+        <span data-i18n="saveAsTranslation">(“Saglabāt kā...”).</span>
+      </p>
+      <label class="file-picker" for="schedule-file">
+        <span class="file-picker-mark" aria-hidden="true">↑</span>
+        <span class="file-picker-copy">
+          <strong data-i18n="pickerLabel">Izvēlieties vai ievelciet Sheet1.csv</strong>
+          <span data-i18n="pickerHint">Noklikšķiniet, lai izvēlētos failu, vai ievelciet to šeit · apstrāde notiek lokāli</span>
+        </span>
+        <input id="schedule-file" type="file" accept=".csv,text/csv,text/plain">
+      </label>
+      <p id="file-name" class="file-name" hidden></p>
+
+      <div class="settings-grid">
+        <div class="field">
+          <label for="month-year" data-i18n="scheduleMonth">Grafika mēnesis</label>
+          <select id="month-year" disabled>
+            <option data-i18n="chooseFileFirst">Vispirms izvēlieties grafika failu</option>
+          </select>
+          <small data-i18n="matchingMonths">Pieejami tikai tie mēneši, kuru dienu skaits atbilst failā norādītajam.</small>
+        </div>
+        <div class="field">
+          <label for="event-name" data-i18n="eventName">Kalendāra notikuma nosaukums</label>
+          <input id="event-name" type="text" value="BD" autocomplete="off" maxlength="200" required>
+          <small data-i18n="eventNameHint">Šis nosaukums tiks izmantots katram maiņas notikumam.</small>
+        </div>
+      </div>
+    </section>
+
+    <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+
+    <section id="results" class="results" hidden aria-labelledby="results-heading">
+      <div class="section-heading results-heading">
+        <div>
+          <p class="step" data-i18n="reviewStep">02 · PĀRSKATS UN LEJUPIELĀDE</p>
+          <h2 id="results-heading" data-i18n="previewHeading">Grafika priekšskatījums</h2>
+        </div>
+        <p id="schedule-summary" class="summary-pill"></p>
+      </div>
+
+      <div id="validation" class="validation"></div>
+      <div id="downloads" class="downloads" aria-live="polite"></div>
+
+      <div class="table-shell">
+        <div class="table-scroll" tabindex="0" aria-label="Ritināms parsētā grafika priekšskatījums" data-i18n-aria-label="tableLabel">
+          <table id="schedule-table">
+            <caption class="visually-hidden" data-i18n="tableCaption">Parsētās darbinieku maiņas pa kalendāra dienām</caption>
+          </table>
+        </div>
+      </div>
+      <p class="table-hint" data-i18n="tableHint">Ritiniet horizontāli, lai skatītu visas dienas. Tukša šūna nozīmē, ka maiņas nav; X norāda uz izbeigtu darba līgumu.
+      </p>
+    </section>
+
+    <footer>
+      <span data-i18n="timezone">Laika josla: Europe/Riga</span>
+      <span data-i18n="footer">Privātums pēc noklusējuma · Bez servera · Bez izsekošanas</span>
+    </footer>
+  </main>
+</body>
+
+</html>
