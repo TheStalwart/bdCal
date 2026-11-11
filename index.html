@@ -54,10 +54,11 @@
       <details class="bookmarklet-help">
         <summary data-i18n="bookmarkletInstructions">Grāmatzīmes pievienošana izlases joslai</summary>
         <ol>
-          <li data-i18n="bookmarkletStep1">Ieslēdziet pārlūkprogrammas izlases joslu un pievienojiet tai šo lapu kā grāmatzīmi.</li>
-          <li data-i18n="bookmarkletStep2">Rediģējiet grāmatzīmi un tās adreses laukā ielīmējiet zemāk redzamo kodu.</li>
+          <li data-i18n="bookmarkletStep1">Pamēģiniet vilkt zemāk esošo saiti uz pārlūkprogrammas izlases joslu.</li>
+          <li data-i18n="bookmarkletStep2">Ja vilkšana nedarbojas, izveidojiet grāmatzīmi un tās adreses laukā ielīmējiet zemāk redzamo kodu.</li>
           <li data-i18n="bookmarkletStep3">Atveriet darba grafiku avota vietnē un noklikšķiniet uz grāmatzīmes; tiks lejupielādēts Sheet1.csv.</li>
         </ol>
+        <a id="bookmarklet-drag" class="bookmarklet-drag" href="javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()" draggable="true" data-i18n="bookmarkletDragLink">Saglabāt grafiku</a>
         <label for="bookmarklet-code" data-i18n="bookmarkletLabel">Grāmatzīmes kods (kopējiet visu tekstu)</label>
         <textarea id="bookmarklet-code" class="bookmarklet-code" readonly rows="3" spellcheck="false">javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()</textarea>
       </details>

@@ -19,9 +19,10 @@ the personal code may be used locally to distinguish their filenames.
 
 ## Use
 
-1. Install the bookmarklet on your browser's favorites/bookmarks bar:
-   - Show the favorites/bookmarks bar and add this page as a bookmark.
-   - Edit the bookmark and replace its address/URL with the code below.
+1. Show your browser's favorites/bookmarks bar and try dragging the bookmarklet
+   link from the app's input panel onto it. If your browser does not allow
+   dragging the bookmarklet, create a bookmark
+   and paste the code below into its address/URL field instead.
 
    ```javascript
    javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()

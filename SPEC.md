@@ -11,7 +11,13 @@ bookmarklet that reads the displayed Jspreadsheet 5.0.0 data and downloads
 an optional or unnecessary feature. Include instructions for installing it on
 the browser's favorites/bookmarks bar. The bookmarklet must download the
 spreadsheet data as tab-delimited UTF-8 text with a UTF-8 BOM and CRLF line
-endings, using the exact filename `Sheet1.csv`.
+endings, using the exact filename `Sheet1.csv`. Provide a draggable link to
+install it directly on the favorites/bookmarks bar where supported, while
+retaining copy-and-paste installation instructions as a fallback. Clicking
+the draggable link on the converter page itself must not execute the
+bookmarklet. Give the draggable link a descriptive action label, such as
+`Saglabāt grafiku` in Latvian and `Save schedule` in English, so the resulting
+bookmark title describes its purpose.
 
 The source format is fixed and is tab-delimited despite the `.csv` extension. It is UTF-8 text, optionally beginning with a UTF-8 BOM. Accept LF or CRLF line endings. Preserve empty fields between tabs, including trailing empty day cells; do not parse it as comma-separated data. A final line terminator is optional. Reject standalone blank rows; do not silently discard them.
 

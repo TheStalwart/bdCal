@@ -21,6 +21,10 @@ test("provides the required schedule-export bookmarklet and installation instruc
   const readmeBookmarklet = readme.match(/```javascript\r?\n([\s\S]*?)\r?\n\s*```/u)?.[1]?.trim();
   assert.equal(pageBookmarklet, bookmarklet);
   assert.equal(readmeBookmarklet, bookmarklet);
+  assert.ok(pageHtml.includes(`<a id="bookmarklet-drag" class="bookmarklet-drag" href="${bookmarklet}" draggable="true"`));
+  assert.match(appSource, /bookmarkletLink\.addEventListener\("click", \(event\) => event\.preventDefault\(\)\)/u);
+  assert.equal(translate("bookmarkletDragLink", {}, "lv"), "Saglabāt grafiku");
+  assert.equal(translate("bookmarkletDragLink", {}, "en"), "Save schedule");
   assert.match(pageHtml, /bookmarkletInstructions/u);
   assert.match(readme, /favorites\/bookmarks bar/u);
   assert.match(spec, /hard, required part/u);

@@ -22,9 +22,10 @@ const translations = {
     acquisitionLead: "Avota vietnē vairs nav izvēlnes “Saglabāt kā...”. Vispirms iegūstiet grafika failu:",
     acquisitionText: "Izmantojiet zemāk redzamo grāmatzīmi, lai lejupielādētu Sheet1.csv.",
     bookmarkletInstructions: "Grāmatzīmes pievienošana izlases joslai",
-    bookmarkletStep1: "Ieslēdziet pārlūkprogrammas izlases joslu un pievienojiet tai šo lapu kā grāmatzīmi.",
-    bookmarkletStep2: "Rediģējiet grāmatzīmi un tās adreses laukā ielīmējiet zemāk redzamo kodu.",
+    bookmarkletStep1: "Pamēģiniet vilkt zemāk esošo saiti uz pārlūkprogrammas izlases joslu.",
+    bookmarkletStep2: "Ja vilkšana nedarbojas, izveidojiet grāmatzīmi un tās adreses laukā ielīmējiet zemāk redzamo kodu.",
     bookmarkletStep3: "Atveriet darba grafiku avota vietnē un noklikšķiniet uz grāmatzīmes; tiks lejupielādēts Sheet1.csv.",
+    bookmarkletDragLink: "Saglabāt grafiku",
     bookmarkletLabel: "Grāmatzīmes kods (kopējiet visu tekstu)",
     pickerLabel: "Izvēlieties vai ievelciet Sheet1.csv",
     pickerHint: "Noklikšķiniet, lai izvēlētos failu, vai ievelciet to šeit · apstrāde notiek lokāli",
@@ -97,9 +98,10 @@ const translations = {
     acquisitionLead: "The source site's “Save as...” menu is no longer available. First, get the schedule file:",
     acquisitionText: "Use the bookmarklet below to download Sheet1.csv.",
     bookmarkletInstructions: "Add the bookmarklet to your favorites bar",
-    bookmarkletStep1: "Show your browser's favorites/bookmarks bar and add this page as a bookmark.",
-    bookmarkletStep2: "Edit the bookmark and paste the code below into its address/URL field.",
+    bookmarkletStep1: "Try dragging the link below to your browser's favorites/bookmarks bar.",
+    bookmarkletStep2: "If dragging does not work, create a bookmark and paste the code below into its address/URL field.",
     bookmarkletStep3: "Open the work schedule on the source site and click the bookmark; Sheet1.csv will download.",
+    bookmarkletDragLink: "Save schedule",
     bookmarkletLabel: "Bookmarklet code (copy all of the text)",
     pickerLabel: "Choose or drop Sheet1.csv",
     pickerHint: "Click to browse, or drag and drop the file here · processed locally",
@@ -901,6 +903,8 @@ function initialize() {
   document.querySelectorAll("[data-language]").forEach((button) => {
     button.addEventListener("click", () => applyLanguage(button.dataset.language));
   });
+  const bookmarkletLink = element("bookmarklet-drag");
+  bookmarkletLink.addEventListener("click", (event) => event.preventDefault());
   const filePicker = document.querySelector(".file-picker");
   element("schedule-file").addEventListener("change", (event) => {
     void handleFile(event.currentTarget.files?.[0]);
