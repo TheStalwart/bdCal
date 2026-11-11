@@ -11,6 +11,13 @@ const pageHtml = await readFile(new URL("../index.html", import.meta.url), "utf8
 const appSource = await readFile(new URL("../app.js", import.meta.url), "utf8");
 const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
 const spec = await readFile(new URL("../SPEC.md", import.meta.url), "utf8");
+const logoSvg = await readFile(new URL("../logo.svg", import.meta.url), "utf8");
+
+test("uses the calendar 92 mark in the header and as the favicon", () => {
+  assert.match(pageHtml, /<link rel="icon" href="\.\/logo\.svg" type="image\/svg\+xml">/u);
+  assert.match(pageHtml, /<img class="brand-mark" src="\.\/logo\.svg" alt="" width="56" height="56">/u);
+  assert.match(logoSvg, /<text\b[^>]*>92<\/text>/u);
+});
 
 test("provides the required schedule-export bookmarklet and installation instructions", () => {
   const bookmarklet = String.raw`javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()`;
