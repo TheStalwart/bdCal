@@ -19,15 +19,27 @@ the personal code may be used locally to distinguish their filenames.
 
 ## Use
 
-1. In the source application, right-click the work schedule and choose
-   **“Saglabāt kā...”** (“Save as...”) to save `Sheet1.csv`.
-2. Open the app and choose the saved file, or drag and drop it into the file
-   picker.
-3. Select a schedule month and year. Only dates matching the number of day
+1. Install the bookmarklet on your browser's favorites/bookmarks bar:
+   - Show the favorites/bookmarks bar and add this page as a bookmark.
+   - Edit the bookmark and replace its address/URL with the code below.
+
+   ```javascript
+   javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()
+   ```
+
+2. With the work schedule open in the source application, click the bookmarklet
+   on the favorites/bookmarks bar. It downloads `Sheet1.csv`.
+3. Open the app and choose the downloaded file, or drag and drop it into the
+   file picker.
+4. Select a schedule month and year. Only dates matching the number of day
    columns in the file are offered.
-4. Optionally edit the calendar event name. It is used as the title of each
+5. Optionally edit the calendar event name. It is used as the title of each
    shift event.
-5. Review the parsed schedule and download each employee's `.ics` file.
+6. Review the parsed schedule and download each employee's `.ics` file.
+
+The source site's “Save as...” menu is no longer available. The bookmarklet
+reads the displayed Jspreadsheet 5.0.0 data and downloads it as tab-delimited UTF-8
+text with a BOM and CRLF line endings, named exactly `Sheet1.csv`.
 
 The app creates no empty calendar files for employees without shifts. Calendar
 events use the `Europe/Riga` time zone. If a scheduled time is ambiguous or

@@ -5,6 +5,14 @@ a proprietary format of BD,
 into industry standard .ics feed,
 compatible with popular apps like Google Calendar, Microsoft Outlook and iCloud.
 
+The source website no longer provides its “Save as...” menu item. A browser
+bookmarklet that reads the displayed Jspreadsheet 5.0.0 data and downloads
+`Sheet1.csv` is a hard, required part of this app; do not remove or treat it as
+an optional or unnecessary feature. Include instructions for installing it on
+the browser's favorites/bookmarks bar. The bookmarklet must download the
+spreadsheet data as tab-delimited UTF-8 text with a UTF-8 BOM and CRLF line
+endings, using the exact filename `Sheet1.csv`.
+
 The source format is fixed and is tab-delimited despite the `.csv` extension. It is UTF-8 text, optionally beginning with a UTF-8 BOM. Accept LF or CRLF line endings. Preserve empty fields between tabs, including trailing empty day cells; do not parse it as comma-separated data. A final line terminator is optional. Reject standalone blank rows; do not silently discard them.
 
 Each employee row contains, in order: first name, last name, personal code (which may be empty), one day-entry field for each calendar day, and a final monthly-hours checksum. First- and last-name fields may contain multiple words; do not assume either field is a single word. The first day-entry field maps to day 1 of the selected month, the second to day 2, and so on. Rows have the same number of day-entry fields. The final summary row is identified by the exact first-field value `Stundas dienā`; it contains two empty fields, one daily-hours checksum for each day, and a final grand-total checksum field. There must be exactly one summary row, and it follows the employee rows. The number of day-entry fields determines the schedule's day count and must be 28 through 31.
@@ -55,8 +63,10 @@ Visualization of parsed Sheet1.csv would be welcome.
 
 Do not use a real schedule as a committed fixture, even after removing names and personal codes; schedules and derived shift patterns may still identify people. Maintain one wholly generated synthetic fixture at `fixtures/Sheet1.example.csv`. It should cover the supported day-entry values, valid shift-hour boundaries and durations, empty cells, and representative employee and summary rows, with all checksums computed from its synthetic entries. Never derive fixture values or column order from a real schedule. A synthetic fixture reduces exposure to personal data but does not by itself establish GDPR compliance for the application or its operation. Do not modify the source format; treat it as fixed.
 
-The frontend should include instructions to extract the Sheet1.csv file from the source application,
-which is to right-click on shift schedule and select "Saglabāt kā..." menu item.
+The frontend must include the bookmarklet and instructions to install it on the
+browser's favorites/bookmarks bar, then invoke it on the displayed work
+schedule to download `Sheet1.csv`. The source website's removed “Saglabāt
+kā...” (“Save as...”) menu item is not an available extraction workflow.
 
 The UI language should default to Latvian and provide a user-accessible option to switch to
 English. Localize all user-facing static and dynamically generated UI text, including validation

@@ -124,6 +124,32 @@ h1 {
   line-height: 1.5;
 }
 .acquire-instructions strong { color: var(--ink); }
+.bookmarklet-help {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: #fcfbfe;
+  color: var(--ink);
+  font-size: .85rem;
+  line-height: 1.5;
+}
+.bookmarklet-help summary { font-weight: 700; cursor: pointer; }
+.bookmarklet-help ol { margin: 10px 0; padding-left: 22px; color: var(--muted); }
+.bookmarklet-help li + li { margin-top: 5px; }
+.bookmarklet-help label { display: block; margin-bottom: 5px; font-weight: 700; }
+.bookmarklet-code {
+  display: block;
+  width: 100%;
+  min-height: 76px;
+  padding: 8px;
+  border: 1px solid #d5d2e1;
+  border-radius: 7px;
+  background: var(--white);
+  color: var(--ink);
+  font: .75rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
+  resize: vertical;
+}
 
 .file-picker {
   display: flex;

@@ -9,6 +9,23 @@ const fixtureUrl = new URL("../fixtures/Sheet1.example.csv", import.meta.url);
 const fixture = await readFile(fixtureUrl, "utf8");
 const pageHtml = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const appSource = await readFile(new URL("../app.js", import.meta.url), "utf8");
+const readme = await readFile(new URL("../README.md", import.meta.url), "utf8");
+const spec = await readFile(new URL("../SPEC.md", import.meta.url), "utf8");
+
+test("provides the required schedule-export bookmarklet and installation instructions", () => {
+  const bookmarklet = String.raw`javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()`;
+  const textareaStart = pageHtml.indexOf('<textarea id="bookmarklet-code"');
+  const textareaContentStart = pageHtml.indexOf(">", textareaStart) + 1;
+  const textareaEnd = pageHtml.indexOf("</textarea>", textareaContentStart);
+  const pageBookmarklet = pageHtml.slice(textareaContentStart, textareaEnd);
+  const readmeBookmarklet = readme.match(/```javascript\r?\n([\s\S]*?)\r?\n\s*```/u)?.[1]?.trim();
+  assert.equal(pageBookmarklet, bookmarklet);
+  assert.equal(readmeBookmarklet, bookmarklet);
+  assert.match(pageHtml, /bookmarkletInstructions/u);
+  assert.match(readme, /favorites\/bookmarks bar/u);
+  assert.match(spec, /hard, required part/u);
+  assert.match(spec, /UTF-8 BOM and CRLF line\s+endings/u);
+});
 
 test("parses the synthetic schedule and validates all checksums", () => {
   const schedule = parseSchedule(fixture);

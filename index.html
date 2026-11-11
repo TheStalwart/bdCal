@@ -49,10 +49,18 @@
       </div>
       <p class="acquire-instructions">
         <strong data-i18n="acquisitionLead">Vispirms iegūstiet grafika failu:</strong>
-        <span data-i18n="acquisitionText">Ar labo peles pogu noklikšķiniet uz darba grafika un izvēlieties</span>
-        <span lang="lv">“Saglabāt kā...”</span>
-        <span data-i18n="saveAsTranslation">(“Saglabāt kā...”).</span>
+        <span data-i18n="acquisitionText">Izmantojiet zemāk redzamo grāmatzīmi, lai lejupielādētu Sheet1.csv.</span>
       </p>
+      <details class="bookmarklet-help">
+        <summary data-i18n="bookmarkletInstructions">Grāmatzīmes pievienošana izlases joslai</summary>
+        <ol>
+          <li data-i18n="bookmarkletStep1">Ieslēdziet pārlūkprogrammas izlases joslu un pievienojiet tai šo lapu kā grāmatzīmi.</li>
+          <li data-i18n="bookmarkletStep2">Rediģējiet grāmatzīmi un tās adreses laukā ielīmējiet zemāk redzamo kodu.</li>
+          <li data-i18n="bookmarkletStep3">Atveriet darba grafiku avota vietnē un noklikšķiniet uz grāmatzīmes; tiks lejupielādēts Sheet1.csv.</li>
+        </ol>
+        <label for="bookmarklet-code" data-i18n="bookmarkletLabel">Grāmatzīmes kods (kopējiet visu tekstu)</label>
+        <textarea id="bookmarklet-code" class="bookmarklet-code" readonly rows="3" spellcheck="false">javascript:(()=>{const d=document.querySelectorAll('.jss_container')[0].jspreadsheet.getData();const t=d.map(r=>r.join('\t')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\uFEFF'+t],{type:'text/csv;charset=utf-8;'}));a.download='Sheet1.csv';a.click();URL.revokeObjectURL(a.href)})()</textarea>
+      </details>
       <label class="file-picker" for="schedule-file">
         <span class="file-picker-mark" aria-hidden="true">↑</span>
         <span class="file-picker-copy">
